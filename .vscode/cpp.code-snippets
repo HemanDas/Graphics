@@ -1,0 +1,20 @@
+{
+    "boilerplate": {
+        "prefix": "graphics",
+        "body": [
+            "#include<iostream>",
+            "#include<graphics.h>",
+            "using namespace std;",
+            "int main()",
+            "{",
+            "    int gd = DETECT, gm;",
+            "initgraph(&gd, &gm, (char *)\"\");",
+            "",
+            "getch();",
+            "closegraph();",
+            "return 0;",
+            "}"
+        ],
+        "description": "Log output to console"
+    }
+}
