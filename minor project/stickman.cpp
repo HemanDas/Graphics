@@ -3,13 +3,106 @@
 #include<graphics.h>
 #include<winuser.h>
 using namespace std;
-int x=50,y=450,radius=15,a=0,b=600,c=1,page=0,posx=0,yx;
+int x=50,y=450,radius=15,a=0,b=600,c=1,page=0,posx=0,yx=1,d=0;
 float g=8,dx,dy,tx=10,screenwidth=1566, screenheight=720;
 void start(){
-    settextstyle(4,HORIZ_DIR,3);
-    outtextxy(400,400, "press enter to start or press escape to exit " );
+    cleardevice();
+    setcolor(RED);
+	settextstyle(1,HORIZ_DIR,7);
+    outtextxy(200,300, "Let's begin your adventure");
+    setbkcolor(BLACK);
+    setcolor(RED);
+    settextstyle(1,HORIZ_DIR,yx);
+    outtextxy(500,450, "Press enter to start or press escape to exit " );
+    yx++;
+    if(yx==3){yx=1;}
+
+}
+void intro()
+{
+    delay(2000);
+	cleardevice();
+	setcolor(CYAN);
+	settextstyle(4,HORIZ_DIR,3);
+    readimagefile("2.bmp",0,0,1600,700);
+    outtextxy(350,350, "You are uncertain of the place you are right now" );
+    delay(5000);
+    cleardevice();
+    readimagefile("1.bmp",0,0,1600,700);
+    outtextxy(200,350, "To reach home you have to avoid spike in your path in different environment." );
+    delay(5000);
+    cleardevice();
+    readimagefile("3.bmp",0,0,1600,700);
+    outtextxy(350,350, "It's nearing night soon, so you need to be at home to be safe.");
+    delay(5000);
+    cleardevice();
+    delay(2000);
+
+}
+void loading_screen()
+{	
+    cleardevice();
+    for(int i=0;i<100;i=i+10)
+    {
+    	int e=i*2;
+    	setcolor(RED);
+    	line (200+e,200,400,200);
+    	line (300,100+e,300,300);
+    	delay(10);
+    	int j=i*2.1;
+    	setcolor(CYAN);
+		line (200,200,400+j,200);
+    	line (300,100,300,300+j);
+    	delay(10);
+    	int k=i*2.3;
+		setcolor(BLUE);
+		line (200,200,400,200+k);
+    	line (300,100,300+k,300);
+    	delay(10);
+    	int l=i*2.6;
+		setcolor(LIGHTGREEN);
+		line (200,200,400,200+l);
+    	line (300,100,300+l,300);
+    	delay(10);
+    	int m=i*2.5;
+		setcolor(GREEN);
+		line (200,200+m,400,200);
+    	line (300+m,100,300,300);
+        
+	}
+	setcolor(CYAN);
+	settextstyle(4,HORIZ_DIR,6);
+    outtextxy(500,350, "L O A D I N G" );
+		for(int a=0;a<30;a=a+10) 		//main loop for loading dots
+		{                  
+				setcolor(CYAN);
+				setfillstyle(SOLID_FILL,CYAN);
+				rectangle(1000+a,385,1005+a,390);
+				floodfill(1001+a,389,CYAN);
+				delay(1000);
+		}
+		cleardevice();
+        
 }
 void body(int x,int y,int radius){ 
+        setcolor(WHITE);
+        //castle building
+            setcolor(WHITE);
+            setfillstyle(SOLID_FILL,BROWN);
+            rectangle(700,350,950,600);					//rectangle of main house structure
+            floodfill(701,351,WHITE);
+            
+            setfillstyle(SOLID_FILL,LIGHTGRAY);
+            rectangle(800,500,850,600);					//door
+            floodfill(810,510,WHITE);
+            
+            setfillstyle(SOLID_FILL,LIGHTGRAY);
+			rectangle(730,400,780,450);					//window
+			floodfill(740,430,WHITE);
+			
+			setfillstyle(SOLID_FILL,LIGHTGRAY);
+			rectangle(870,400,920,450);					//window
+			floodfill(900,430,WHITE);
         //stickman//
             //head//
             circle(x, y, radius);
@@ -128,18 +221,57 @@ void collision(){
                 }
     }}
 }
+void postcredit()
+{   
+    if(x>820&&x<=850){
+    cleardevice();
+    setbkcolor(BLACK);		
+    cleardevice();
+    delay(10);
+    setcolor(CYAN);
+    settextstyle(4,HORIZ_DIR,7);
+    outtextxy(screenwidth-1200,750-d, "Created/Coded by:");
+    outtextxy(screenwidth-1200,200-d, "Congratulations");
+    outtextxy(screenwidth-1500,1200-d, "Thank you for playing this game.");
+    settextstyle(4,HORIZ_DIR,3);
+    outtextxy(screenwidth-1100,400-d, "You have reached your home" );
+    outtextxy(screenwidth-1200,450-d, "Well done on your journey, now you can be safe.");
+    outtextxy(screenwidth-1100,500-d, "You can now have a good rest");
+    settextstyle(4,HORIZ_DIR,4);
+    outtextxy(screenwidth-1100,900-d, "Heman Das      (LEC076BCT012)" );
+    outtextxy(screenwidth-1100,1000-d,"Sumeet Deshar(LEC076BCT034)" );
+    if(d>=550)
+    {
+        setcolor(WHITE);
+        settextstyle(4,HORIZ_DIR,2);
+        outtextxy(screenwidth-300,650,"Press ESC to Exit" );
+    }
+    d++;
+    
+    screen:
+    if(GetAsyncKeyState(VK_RIGHT)|| GetAsyncKeyState(VK_LEFT)|| GetAsyncKeyState(VK_UP))// making the player stand still to show the "you are dead "message
+                {
+                    goto screen;
+                }
+    }
+}
 int main(){
     // initializing velocity
     dx=x;
     dy=y;
     //
-    initwindow(10000,700);   
+    initwindow(10000,700); 
+    loading_screen();  
+    cleardevice();
+    intro();
     cleardevice();
     while (1)
     {
     
     start();
+    delay(500);
     if(GetAsyncKeyState(VK_RETURN)){
+        loading_screen();  
         while(1)
         {   
             // to remove flickering / buffering of the images seen in window
@@ -149,6 +281,7 @@ int main(){
             cleardevice();
             body(x,y,radius);
             background();
+            postcredit();
             gravity();
             collision();
             if(GetAsyncKeyState(VK_RIGHT)&& x<=9000){      // max position that a player can go right is upto 9000
@@ -169,13 +302,12 @@ int main(){
                 for(int i=0; i<100;i++){
                 dy-=1;                                      // loop for jump
                 
-                }
-               //PlaySoundA((LPCSTR) "C:\\jump.mp3", NULL,SND_ASYNC);    
+                }   
                 if(GetAsyncKeyState(VK_RIGHT)){dx+=3;}  
                 if(GetAsyncKeyState(VK_LEFT)){dx-=3;}  
             }
-            
-                
+            //to end at castle door
+	        	
             page=1-page;
             x=dx;
             y=dy;
