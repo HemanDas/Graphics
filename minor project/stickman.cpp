@@ -26,15 +26,15 @@ void intro()
 	settextstyle(4,HORIZ_DIR,3);
     readimagefile("2.bmp",0,0,1600,700);
     outtextxy(350,350, "You are uncertain of the place you are right now" );
-    delay(5000);
+    delay(6000);
     cleardevice();
     readimagefile("1.bmp",0,0,1600,700);
     outtextxy(200,350, "To reach home you have to avoid spike in your path in different environment." );
-    delay(5000);
+    delay(6000);
     cleardevice();
     readimagefile("3.bmp",0,0,1600,700);
     outtextxy(350,350, "It's nearing night soon, so you need to be at home to be safe.");
-    delay(5000);
+    delay(6000);
     cleardevice();
     delay(2000);
 
@@ -260,7 +260,7 @@ int main(){
     dx=x;
     dy=y;
     //
-    initwindow(10000,700); 
+    initwindow(10000,700,"Way To Home?"); 
     loading_screen();  
     cleardevice();
     intro();
