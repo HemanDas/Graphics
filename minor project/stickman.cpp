@@ -148,22 +148,32 @@ void body(int x,int y,int radius){
             line(x,y+radius+20,x+10,y+radius+40);
             }
             // Sun
-            setlinestyle(0,0,2);
-            setfillstyle(SOLID_FILL,YELLOW);
-            circle(x+1000,50,100);
-            floodfill(x+1000,50,WHITE);
+            if(x>7100)
+            {
+                setfillstyle(SOLID_FILL,WHITE);
+                fillellipse(x, 70,100, 100);
+                setcolor(BLACK);
+                setfillstyle(SOLID_FILL,BLACK);
+                fillellipse(x+50, 70,100, 100);
+            }
+            else{
+                setlinestyle(0,0,2);
+                setfillstyle(SOLID_FILL,YELLOW);
+                circle(x+800,50,100);
+                floodfill(x+800,50,WHITE);
+            }
             //
             //ground
             //line(a,b,a+10000,b); 
             //ground color
+            setcolor(WHITE);
             setfillstyle(SOLID_FILL,BROWN);
-
             rectangle(a,b,a+10000,b+100);
-            floodfill(5000,b+20,WHITE);
+            floodfill(x,b+20,WHITE);
             //
             //ellipse as cloud and lines as a spike   
             //spikes in loop
-            for(int j=1; j<40; j++){
+            for(int j=3; j<40; j++){
             line(30+300*j,b,30+300*j,b-20);
             line(50+300*j,b,50+300*j,b-20);
             line(70+300*j,b,70+300*j,b-20);
@@ -181,7 +191,8 @@ void body(int x,int y,int radius){
 }
 void gravity(){
             if(y+radius+46<b ){
-                cleardevice();
+                //cleardevice();
+                clearviewport();
                 body(x,y,radius);
                 delay(1);
                 dy=dy+g;
@@ -200,15 +211,16 @@ void background(){
 void collision(){
     end:
     // using spike as an obstacle
-    for(int j=1; j<50; j++){
-    if( (y+radius+30>=b-20 && x-14>=30+300*j && x-14<=75+300*j)|| (y+radius+30>=b-20 && x+8>=30+300*j && x+8<=70+300*j)){
+    for(int j=3; j<40; j++){
+    if( (y+radius+30>=b-20 && x-8>=30+300*j && x-9<=70+300*j)|| (y+radius+30>=b-20 && x+8>=30+300*j && x+8<=70+300*j)){
                 
                 main:
                 setbkcolor(RED);
 
-                cleardevice();
+                //cleardevice();
+                clearviewport();
                 settextstyle(4,HORIZ_DIR,4);
-                outtextxy(screenwidth-1050,400, "You died.Press enter to restart" );
+                outtextxy(x+50,400, "You died.Press enter to restart" );
                 if(GetAsyncKeyState(VK_RETURN)&1){ // setting it as a restart mechanism
                     dx=67;                         // placing player in starting position
                     posx=0;                        // resetting the coordinate of camera tracker for player in intital position
@@ -224,9 +236,11 @@ void collision(){
 void postcredit()
 {   
     if(x>820&&x<=850){
-    cleardevice();
+    //cleardevice();
+    clearviewport();
     setbkcolor(BLACK);		
-    cleardevice();
+    clearviewport();
+    //cleardevice();
     delay(10);
     setcolor(CYAN);
     settextstyle(4,HORIZ_DIR,7);
@@ -244,7 +258,7 @@ void postcredit()
     {
         setcolor(WHITE);
         settextstyle(4,HORIZ_DIR,2);
-        outtextxy(screenwidth-300,650,"Press ESC to Exit" );
+        outtextxy(screenwidth-400,650,"Press ESC to Exit" );
     }
     d++;
     
@@ -260,7 +274,8 @@ int main(){
     dx=x;
     dy=y;
     //
-    initwindow(10000,700,"Way To Home?"); 
+    initwindow(1500,700,"Way To Home?",0,0); 
+   
     loading_screen();  
     cleardevice();
     intro();
@@ -278,7 +293,8 @@ int main(){
             setactivepage(page);
             setvisualpage(1-page);
             //
-            cleardevice();
+            //cleardevice();
+            clearviewport();
             body(x,y,radius);
             background();
             postcredit();
@@ -315,7 +331,8 @@ int main(){
             delay(1);
         }
         
-            cleardevice();
+            //cleardevice();
+            clearviewport();
     }
     if(GetAsyncKeyState(VK_ESCAPE)){break;}
     }
