@@ -3,7 +3,7 @@
 #include<graphics.h>
 #include<winuser.h>
 using namespace std;
-int x=50,y=450,radius=15,a=0,b=600,c=1,page=0,posx=0,yx=1,d=0;
+int x=250,y=450,radius=15,a=0,b=600,c=1,page=0,posx=0,yx=1,d=0;
 float g=8,dx,dy,tx=10,screenwidth=1566, screenheight=720;
 void start(){
     cleardevice();
@@ -24,15 +24,15 @@ void intro()
 	cleardevice();
 	setcolor(CYAN);
 	settextstyle(4,HORIZ_DIR,3);
-    readimagefile("2.bmp",0,0,1600,700);
+    readimagefile("2.bmp",0,0,1500,700);
     outtextxy(350,350, "You are uncertain of the place you are right now" );
     delay(6000);
     cleardevice();
-    readimagefile("1.bmp",0,0,1600,700);
+    readimagefile("1.bmp",0,0,1500,700);
     outtextxy(200,350, "To reach home you have to avoid spike in your path in different environment." );
     delay(6000);
     cleardevice();
-    readimagefile("3.bmp",0,0,1600,700);
+    readimagefile("3.bmp",0,0,1500,700);
     outtextxy(350,350, "It's nearing night soon, so you need to be at home to be safe.");
     delay(6000);
     cleardevice();
@@ -86,23 +86,70 @@ void loading_screen()
 }
 void body(int x,int y,int radius){ 
         setcolor(WHITE);
-        //castle building
+            // Sun
+                setlinestyle(0,0,2);
+                setfillstyle(SOLID_FILL,YELLOW);
+                circle(x+800,70,100);
+                floodfill(x+705,70,WHITE);
+            //moon
+                if(x>7100)
+                {
+                    setfillstyle(SOLID_FILL,WHITE);
+                    fillellipse(x-600, 70,100, 100);
+                    setcolor(BLACK);
+                    setfillstyle(SOLID_FILL,BLACK);
+                    fillellipse(x-550, 70,100, 100);
+                }
+        //  house
+            //chimney
             setcolor(WHITE);
             setfillstyle(SOLID_FILL,BROWN);
-            rectangle(700,350,950,600);					//rectangle of main house structure
-            floodfill(701,351,WHITE);
-            
+            line(8900,200,8950,200);
+            line(8900,200,8900,264);
+            line(8950,200,8950,294);
+            line(8900,264,8950,294);
+            floodfill(8910,213,WHITE);
+            //smoke
+            setcolor(LIGHTGRAY);
             setfillstyle(SOLID_FILL,LIGHTGRAY);
-            rectangle(800,500,850,600);					//door
-            floodfill(810,510,WHITE);
-            
+            fillellipse(8930, 150,10, 10);
+            fillellipse(8910, 140,10, 10);
+            fillellipse(8910, 180,20, 20);
+            fillellipse(8940, 170,10, 10);
+            //Roof
+            setcolor(WHITE);
+            setfillstyle(SOLID_FILL,MAGENTA);
+            line(8700,350,9050,350);
+            line(8700,350,8875,250);
+            line(8875,250,9050,350);
+            floodfill(8735,345,WHITE);
+            //rectangle of main house structure
             setfillstyle(SOLID_FILL,LIGHTGRAY);
-			rectangle(730,400,780,450);					//window
-			floodfill(740,430,WHITE);
-			
-			setfillstyle(SOLID_FILL,LIGHTGRAY);
-			rectangle(870,400,920,450);					//window
-			floodfill(900,430,WHITE);
+            rectangle(8750,350,9000,600);					
+            floodfill(8751,351,WHITE);
+            //door
+			setfillstyle(SOLID_FILL,BROWN);
+            rectangle(8850,500,8900,600);					
+            floodfill(8851,510,WHITE);
+            //window
+            setfillstyle(HATCH_FILL,YELLOW);
+			rectangle(8780,400,8830,450);					
+			floodfill(8781,430,WHITE);
+			//window
+            setfillstyle(HATCH_FILL,YELLOW);
+			rectangle(8920,400,8970,450);					
+			floodfill(8921,430,WHITE);
+            // instruction for movement
+            if(x<1500){
+                settextstyle(4,HORIZ_DIR,3);
+                outtextxy(350,350, "Use Arrow Keys To Move Left,Right and Jump" );
+                settextstyle(4,HORIZ_DIR,2);
+                outtextxy(50,550, "<Move Left" );
+                outtextxy(350,550, "Move Right>" );
+                outtextxy(910,550, "JUMP" );
+                settextstyle(3,HORIZ_DIR,4);
+                outtextxy(940,520, "^" );
+            }
         //stickman//
             //head//
             circle(x, y, radius);
@@ -147,25 +194,16 @@ void body(int x,int y,int radius){
             line(x,y+radius+20,x-10,y+radius+40);
             line(x,y+radius+20,x+10,y+radius+40);
             }
-            // Sun
-            if(x>7100)
-            {
-                setfillstyle(SOLID_FILL,WHITE);
-                fillellipse(x, 70,100, 100);
-                setcolor(BLACK);
-                setfillstyle(SOLID_FILL,BLACK);
-                fillellipse(x+50, 70,100, 100);
-            }
-            else{
-                setlinestyle(0,0,2);
-                setfillstyle(SOLID_FILL,YELLOW);
-                circle(x+800,50,100);
-                floodfill(x+800,50,WHITE);
-            }
-            //
+            //bush for house
+            setcolor(GREEN);
+            setfillstyle(SOLID_FILL,GREEN);
+            fillellipse(8745, 580,30, 30);
+            fillellipse(8730, 600,30, 30);
+            fillellipse(8760, 600,30, 30);
+            fillellipse(8985, 580,30, 30);
+            fillellipse(8970, 600,30, 30);
+            fillellipse(9000, 600,30, 30);
             //ground
-            //line(a,b,a+10000,b); 
-            //ground color
             setcolor(WHITE);
             setfillstyle(SOLID_FILL,BROWN);
             rectangle(a,b,a+10000,b+100);
@@ -173,13 +211,13 @@ void body(int x,int y,int radius){
             //
             //ellipse as cloud and lines as a spike   
             //spikes in loop
-            for(int j=3; j<40; j++){
+            for(int j=3; j<29; j++){
             line(30+300*j,b,30+300*j,b-20);
             line(50+300*j,b,50+300*j,b-20);
             line(70+300*j,b,70+300*j,b-20);
             }
             //ellipse(cloud) in loops;
-            for(int i=0; i<20;i++){
+            for(int i=0; i<6;i++){
             setfillstyle(SOLID_FILL,WHITE);
             ellipse(100, 100, 0, 360, 200, 100);
             fillellipse(100+i*2000, 100,200, 100);
@@ -201,8 +239,8 @@ void gravity(){
 void background(){
         // background color according to coordinates / using as different environment scene
         if(x>7000){setbkcolor(BLACK);}
-        else if(x>5000&&x<6000){setbkcolor(LIGHTGRAY);}
         else if(x>6000&&x<7000){setbkcolor(LIGHTMAGENTA);}
+        else if(x>5000&&x<6000){setbkcolor(LIGHTGRAY);}
         else if(x>4000&&x<5000){setbkcolor(RED);}
         else if(x>2000&&x<3000){setbkcolor(LIGHTBLUE);}
         else if(x>1000&&x<2000){setbkcolor(CYAN);}
@@ -211,7 +249,7 @@ void background(){
 void collision(){
     end:
     // using spike as an obstacle
-    for(int j=3; j<40; j++){
+    for(int j=3; j<29; j++){
     if( (y+radius+30>=b-20 && x-8>=30+300*j && x-9<=70+300*j)|| (y+radius+30>=b-20 && x+8>=30+300*j && x+8<=70+300*j)){
                 
                 main:
@@ -222,7 +260,7 @@ void collision(){
                 settextstyle(4,HORIZ_DIR,4);
                 outtextxy(x+50,400, "You died.Press enter to restart" );
                 if(GetAsyncKeyState(VK_RETURN)&1){ // setting it as a restart mechanism
-                    dx=67;                         // placing player in starting position
+                    dx=250;                         // placing player in starting position
                     posx=0;                        // resetting the coordinate of camera tracker for player in intital position
                     screenwidth=1566;
                     setviewport(posx,0,screenwidth,screenheight, 1);//placing the camera track in intial position
@@ -235,10 +273,10 @@ void collision(){
 }
 void postcredit()
 {   
-    if(x>820&&x<=850){
+    if(x>8860&&x<=8900){
     //cleardevice();
     clearviewport();
-    setbkcolor(BLACK);		
+    setbkcolor(BLACK);
     clearviewport();
     //cleardevice();
     delay(10);
@@ -276,10 +314,10 @@ int main(){
     //
     initwindow(1500,700,"Way To Home?",0,0); 
    
-    loading_screen();  
-    cleardevice();
-    intro();
-    cleardevice();
+    // loading_screen();  
+    // cleardevice();
+    // intro();
+    // cleardevice();
     while (1)
     {
     
@@ -293,23 +331,22 @@ int main(){
             setactivepage(page);
             setvisualpage(1-page);
             //
-            //cleardevice();
             clearviewport();
             body(x,y,radius);
             background();
             postcredit();
             gravity();
-            collision();
-            if(GetAsyncKeyState(VK_RIGHT)&& x<=9000){      // max position that a player can go right is upto 9000
+            //collision();
+            if(GetAsyncKeyState(VK_RIGHT)&& x<9000){      // max position that a player can go right is upto 9000
                 dx+=10;                                    // player moves right direction with 10 velocity
-            if(x>400 && x<=8000){                          //camera track only starts after player coordinate is greater than 400
+            if(x>400 && x<=8000 ){                          //camera track only starts after player coordinate is greater than 400
             setviewport(posx,0,screenwidth,screenheight, 1);//camera track
             posx=posx-tx;
             screenwidth+=tx;}
             }
             if(GetAsyncKeyState(VK_LEFT)&&x>=17 && x<=9000){// min position that a player can go left is upto 17
                 dx-=10;                                     // player moves left direction with 10 velocity
-            if(x>300&&x<=8000){
+            if(x>405&&x<=8000){
             setviewport(posx,0,screenwidth,screenheight, 1);
             posx=posx+tx;
             screenwidth-=tx;}
@@ -321,17 +358,13 @@ int main(){
                 }   
                 if(GetAsyncKeyState(VK_RIGHT)){dx+=3;}  
                 if(GetAsyncKeyState(VK_LEFT)){dx-=3;}  
-            }
-            //to end at castle door
-	        	
+            }	
             page=1-page;
             x=dx;
             y=dy;
             if(GetAsyncKeyState(VK_ESCAPE)){break;}
             delay(1);
         }
-        
-            //cleardevice();
             clearviewport();
     }
     if(GetAsyncKeyState(VK_ESCAPE)){break;}
