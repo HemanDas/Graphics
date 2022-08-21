@@ -25,15 +25,15 @@ void intro()
 	setcolor(CYAN);
 	settextstyle(4,HORIZ_DIR,3);
     readimagefile("2.bmp",0,0,1500,700);
-    outtextxy(350,350, "You are uncertain of the place you are right now" );
+    outtextxy(250,350, "You are uncertain of the place you are in right now. Reach home" );
     delay(6000);
     cleardevice();
     readimagefile("1.bmp",0,0,1500,700);
-    outtextxy(200,350, "To reach home you have to avoid spike in your path in different environment." );
+    outtextxy(450,350, "Avoid obstacle on your path." );
     delay(6000);
     cleardevice();
     readimagefile("3.bmp",0,0,1500,700);
-    outtextxy(350,350, "It's nearing night soon, so you need to be at home to be safe.");
+    outtextxy(350,350, "It's nearing night soon, be quick about it");
     delay(6000);
     cleardevice();
     delay(2000);
@@ -217,7 +217,7 @@ void body(int x,int y,int radius){
             line(70+300*j,b,70+300*j,b-20);
             }
             //ellipse(cloud) in loops;
-            for(int i=0; i<6;i++){
+            for(int i=0; i<4;i++){
             setfillstyle(SOLID_FILL,WHITE);
             ellipse(100, 100, 0, 360, 200, 100);
             fillellipse(100+i*2000, 100,200, 100);
@@ -239,12 +239,11 @@ void gravity(){
 void background(){
         // background color according to coordinates / using as different environment scene
         if(x>7000){setbkcolor(BLACK);}
-        else if(x>6000&&x<7000){setbkcolor(LIGHTMAGENTA);}
-        else if(x>5000&&x<6000){setbkcolor(LIGHTGRAY);}
-        else if(x>4000&&x<5000){setbkcolor(RED);}
-        else if(x>2000&&x<3000){setbkcolor(LIGHTBLUE);}
-        else if(x>1000&&x<2000){setbkcolor(CYAN);}
-        else{setbkcolor(2);}
+        else if(x>6000&&x<7000){setbkcolor(LIGHTRED);}
+        else if(x>5000&&x<6000){setbkcolor(RED);}
+        else if(x>4000&&x<5000){setbkcolor(GREEN);}
+        else if(x>2000&&x<4000){setbkcolor(CYAN);}
+        else{setbkcolor(LIGHTBLUE);}
 }
 void collision(){
     end:
@@ -258,7 +257,7 @@ void collision(){
                 //cleardevice();
                 clearviewport();
                 settextstyle(4,HORIZ_DIR,4);
-                outtextxy(x+50,400, "You died.Press enter to restart" );
+                outtextxy(x+50,400, "You died. Press enter to restart" );
                 if(GetAsyncKeyState(VK_RETURN)&1){ // setting it as a restart mechanism
                     dx=250;                         // placing player in starting position
                     posx=0;                        // resetting the coordinate of camera tracker for player in intital position
@@ -286,12 +285,12 @@ void postcredit()
     outtextxy(screenwidth-1200,200-d, "Congratulations");
     outtextxy(screenwidth-1500,1200-d, "Thank you for playing this game.");
     settextstyle(4,HORIZ_DIR,3);
-    outtextxy(screenwidth-1100,400-d, "You have reached your home" );
-    outtextxy(screenwidth-1200,450-d, "Well done on your journey, now you can be safe.");
-    outtextxy(screenwidth-1100,500-d, "You can now have a good rest");
+    outtextxy(screenwidth-1100,400-d, "You have reached your home." );
+    outtextxy(screenwidth-1100,450-d, "Well done on your journey.");
+    outtextxy(screenwidth-1100,500-d, "You can now be safe.");
     settextstyle(4,HORIZ_DIR,4);
-    outtextxy(screenwidth-1100,900-d, "Heman Das      (LEC076BCT012)" );
-    outtextxy(screenwidth-1100,1000-d,"Sumeet Deshar(LEC076BCT034)" );
+    outtextxy(screenwidth-1100,900-d, "Heman Das     (LEC076BCT012)" );
+    outtextxy(screenwidth-1100,1000-d,"Sumit Deshar  (LEC076BCT038)" );
     if(d>=550)
     {
         setcolor(WHITE);
@@ -313,11 +312,10 @@ int main(){
     dy=y;
     //
     initwindow(1500,700,"Way To Home?",0,0); 
-   
-    // loading_screen();  
-    // cleardevice();
-    // intro();
-    // cleardevice();
+    loading_screen();  
+    cleardevice();
+    intro();
+    cleardevice();
     while (1)
     {
     
@@ -336,7 +334,7 @@ int main(){
             background();
             postcredit();
             gravity();
-            //collision();
+            collision();
             if(GetAsyncKeyState(VK_RIGHT)&& x<9000){      // max position that a player can go right is upto 9000
                 dx+=10;                                    // player moves right direction with 10 velocity
             if(x>400 && x<=8000 ){                          //camera track only starts after player coordinate is greater than 400
