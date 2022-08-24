@@ -37,7 +37,6 @@ void intro()
     delay(6000);
     cleardevice();
     delay(2000);
-
 }
 void loading_screen()
 {	
@@ -249,7 +248,7 @@ void collision(){
     end:
     // using spike as an obstacle
     for(int j=3; j<29; j++){
-    if( (y+radius+30>=b-20 && x-8>=30+300*j && x-9<=70+300*j)|| (y+radius+30>=b-20 && x+8>=30+300*j && x+8<=70+300*j)){
+    if( (y+radius+30>=b-20 && x-8>=30+300*j && x-11<=70+300*j)|| (y+radius+30>=b-20 && x+8>=30+300*j && x+8<=70+300*j)){
                 
                 main:
                 setbkcolor(RED);
